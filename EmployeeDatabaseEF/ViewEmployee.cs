@@ -9,7 +9,7 @@ namespace EmployeeDatabase
 {
     class ViewEmployee: ObservableObject
     {
-        private EmployeeDatabaseSQLite db;
+        private DB db;
         private ObservableCollection<Employee> employees;
         public ObservableCollection<Employee> Employees
         {
@@ -18,7 +18,7 @@ namespace EmployeeDatabase
         }
         public ViewEmployee()
         {
-            db = new EmployeeDatabaseSQLite();
+            db = new DB();
             Employees = new ObservableCollection<Employee>(db.GetEmployees());
             if (Employees.Count() <= 0)
             {
@@ -51,7 +51,8 @@ namespace EmployeeDatabase
             List<decimal> rates = new List<decimal> { (decimal)10.0, (decimal)15.0, (decimal)25.0, (decimal)25.0, (decimal)35.0 };
             for (int i = 0; i < names.Count(); i++)
             {
-                db.InsertEmployee(names[i], positions[i], rates[i]);
+                Employee e = new Employee(names[i], positions[i], rates[i]);
+                db.InsertEmployee(e);
             }
         }
     }
